@@ -34,10 +34,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleQuickLogin = (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-  };
+ 
 
   return (
     <div style={{ maxWidth: '440px', margin: '60px auto 80px auto', padding: '0 20px' }}>
@@ -115,50 +112,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* 1-Click Quick Demo Sign In Badge for Passenger */}
-        <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid var(--border-glass)' }}>
-          <div style={{ fontSize: '12px', color: '#94a3b8', textAlign: 'center', marginBottom: '10px' }}>
-            Quick Demo 1-Click Passenger Sign-in:
-          </div>
-          <button
-            type="button"
-            onClick={() => handleQuickLogin('passenger@teluguride.com', 'User@123')}
-            className="btn-secondary"
-            style={{ width: '100%', fontSize: '13px', padding: '10px', gap: '8px' }}
-          >
-            <UserCheck size={16} color="#38bdf8" /> Sign in as Passenger (Ravi Kumar Naidu)
-          </button>
-        </div>
+       
 
-        {/* Separate Admin Portal Link */}
-        <div
-          style={{
-            marginTop: '20px',
-            background: 'rgba(245, 158, 11, 0.08)',
-            border: '1px solid rgba(245, 158, 11, 0.25)',
-            borderRadius: '10px',
-            padding: '12px',
-            textAlign: 'center',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#e2e8f0', marginBottom: '6px' }}>
-            Authorized RTC Operations Official?
-          </div>
-          <Link
-            to="/admin/login"
-            style={{
-              color: '#fbbf24',
-              textDecoration: 'none',
-              fontWeight: 700,
-              fontSize: '13px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
-            <ShieldCheck size={15} /> Access Dedicated Admin Portal (jaswanthdoppa76@gmail.com) →
-          </Link>
-        </div>
+        
 
         <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: '#94a3b8' }}>
           Don't have an account?{' '}
