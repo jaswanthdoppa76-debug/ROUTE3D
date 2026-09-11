@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://route3d-4.onrender.com/api',
   timeout: 1800,
   headers: {
     'Content-Type': 'application/json',
