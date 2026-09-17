@@ -177,8 +177,8 @@ export default function HomePage({ onOpenTracker }) {
 
             {/* Mobile Booking QR Code */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px' }}>
-              <div style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '6px', borderRadius: '8px' }}>
-                <QRCodeSVG value="https://route3d-bus.com/mobile-app" size={60} level="L" />
+              <div style={{ background: '#fff', padding: '4px', borderRadius: '8px' }}>
+                <QRCodeSVG value={typeof window !== 'undefined' ? window.location.origin : 'https://route3d-bus.com'} size={60} level="L" />
               </div>
               <span style={{ fontSize: '11px', color: '#94a3b8', marginTop: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Scan to book on mobile

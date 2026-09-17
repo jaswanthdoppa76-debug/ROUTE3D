@@ -146,6 +146,7 @@ export default function BookingConfirmationPage({ onOpenTracker }) {
   };
 
   const bookingRef = activeBooking.bookingNumber || activeBooking.bookingReference || 'RT3D-TG-884920';
+  const qrUrl = typeof window !== 'undefined' ? `${window.location.origin}` : `https://route3d-bus.com`;
   const sourceCity = activeBooking.sourceCity || activeBooking.schedule?.sourceCity || 'Hyderabad';
   const destCity = activeBooking.destinationCity || activeBooking.schedule?.destinationCity || 'Vijayawada';
   const depTime = (activeBooking.departureTime || activeBooking.schedule?.departureTime || '06:00').slice(0, 5);
@@ -350,7 +351,7 @@ export default function BookingConfirmationPage({ onOpenTracker }) {
               }}
             >
               <QRCodeSVG
-                value={activeBooking.qrCodeData || `JDBUS-TICKET-${bookingRef}`}
+                value={qrUrl}
                 size={100}
                 level="M"
               />
