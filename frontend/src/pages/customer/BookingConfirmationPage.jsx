@@ -103,7 +103,7 @@ export default function BookingConfirmationPage({ onOpenTracker }) {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 10, 15, imgWidth, imgHeight);
-      pdf.save(`Route3D_Ticket_${booking?.bookingNumber || booking?.bookingReference || 'Ticket'}.pdf`);
+      pdf.save(`JDBus_Ticket_${booking?.bookingNumber || booking?.bookingReference || 'Ticket'}.pdf`);
     } catch (err) {
       console.error('Failed to generate ticket PDF:', err);
       window.print();
@@ -141,7 +141,7 @@ export default function BookingConfirmationPage({ onOpenTracker }) {
     operatorName: 'TGSRTC (Telangana RTC)',
     seatNumbers: ['A1'],
     totalAmount: 650.0,
-    qrCodeData: 'ROUTE3D-TICKET-RT3D-TG-884920',
+    qrCodeData: 'JDBUS-TICKET-TG-884920',
     passengers: [{ name: 'Ravi Kumar Naidu', age: 28, gender: 'MALE', seatNumber: 'A1' }],
   };
 
@@ -350,7 +350,7 @@ export default function BookingConfirmationPage({ onOpenTracker }) {
               }}
             >
               <QRCodeSVG
-                value={activeBooking.qrCodeData || `ROUTE3D-TICKET-${bookingRef}`}
+                value={activeBooking.qrCodeData || `JDBUS-TICKET-${bookingRef}`}
                 size={100}
                 level="M"
               />
@@ -377,7 +377,7 @@ export default function BookingConfirmationPage({ onOpenTracker }) {
           }}
         >
           <div>
-            Verified by: <strong style={{ color: '#fff' }}>Route3D Inter-State Mobility</strong>
+            Verified by: <strong style={{ color: '#fff' }}>JD Bus Services Inter-State Mobility</strong>
           </div>
           <div>
             Official Administrator Support:{' '}

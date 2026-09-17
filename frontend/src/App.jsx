@@ -36,10 +36,30 @@ const AdminRoute = ({ children }) => {
   if (loading) return null;
   const AUTHORIZED_ADMIN = 'jaswanthdoppa76@gmail.com';
   const hasAccess = isAdmin || user?.role === 'ROLE_ADMIN' || user?.email?.toLowerCase() === AUTHORIZED_ADMIN || user?.email?.toLowerCase().includes('admin');
-  if (!user || !hasAccess) {
+  if (!user) {
     return <Navigate to="/admin/login" replace />;
   }
+  if (!hasAccess) {
+    return <Navigate to="/home" replace />;
+  }
   return children;
+};
+
+// Protected Route Component for customers
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) return null;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
+// Redirect component for the root path
+const AuthRedirect = () => {
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) return null;
+  return isAuthenticated ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />;
 };
 
 // Footer Component
@@ -153,15 +173,18 @@ function AppContent() {
 
       <div style={{ flex: 1 }}>
         <Routes>
-          {/* Customer Routes */}
-          <Route path="/" element={<HomePage onOpenTracker={handleOpenTracker} />} />
-          <Route path="/search" element={<SearchResultsPage onOpenTracker={handleOpenTracker} />} />
-          <Route path="/seats/:scheduleId" element={<SeatSelectionPage onOpenTracker={handleOpenTracker} />} />
-          <Route path="/passenger-details" element={<PassengerDetailsPage />} />
-          <Route path="/booking-confirmation/:bookingId" element={<BookingConfirmationPage onOpenTracker={handleOpenTracker} />} />
-          <Route path="/my-bookings" element={<MyBookingsPage onOpenTracker={handleOpenTracker} />} />
+          {/* Public Auth Routes & Root Redirect */}
+          <Route path="/" element={<AuthRedirect />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+
+          {/* Protected Customer Routes */}
+          <Route path="/home" element={<ProtectedRoute><HomePage onOpenTracker={handleOpenTracker} /></ProtectedRoute>} />
+          <Route path="/search" element={<ProtectedRoute><SearchResultsPage onOpenTracker={handleOpenTracker} /></ProtectedRoute>} />
+          <Route path="/seats/:scheduleId" element={<ProtectedRoute><SeatSelectionPage onOpenTracker={handleOpenTracker} /></ProtectedRoute>} />
+          <Route path="/passenger-details" element={<ProtectedRoute><PassengerDetailsPage /></ProtectedRoute>} />
+          <Route path="/booking-confirmation/:bookingId" element={<ProtectedRoute><BookingConfirmationPage onOpenTracker={handleOpenTracker} /></ProtectedRoute>} />
+          <Route path="/my-bookings" element={<ProtectedRoute><MyBookingsPage onOpenTracker={handleOpenTracker} /></ProtectedRoute>} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

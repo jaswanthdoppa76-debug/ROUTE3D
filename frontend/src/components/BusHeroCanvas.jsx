@@ -13,11 +13,11 @@ const BusModel = () => {
 
   useFrame((state, delta) => {
     if (busRef.current) {
-      // Gentle vibration & travel oscillation
-      busRef.current.position.y = Math.sin(state.clock.elapsedTime * 8) * 0.02 + 0.5;
+      // Aggressive low-profile travel oscillation
+      busRef.current.position.y = Math.sin(state.clock.elapsedTime * 12) * 0.015 + 0.45;
     }
-    // Rotate wheels
-    const rotationSpeed = delta * 12;
+    // Faster wheel rotation
+    const rotationSpeed = delta * 20;
     if (frontLeftWheel.current) frontLeftWheel.current.rotation.x += rotationSpeed;
     if (frontRightWheel.current) frontRightWheel.current.rotation.x += rotationSpeed;
     if (rearLeftWheel.current) rearLeftWheel.current.rotation.x += rotationSpeed;
@@ -26,14 +26,14 @@ const BusModel = () => {
 
   return (
     <group ref={busRef} position={[0, 0.5, 0]}>
-      {/* Main Bus Chassis - Aerodynamic Luxury Coach Body */}
+      {/* Main Bus Chassis - Aerodynamic Carbon Fiber Body */}
       <mesh position={[0, 1.1, 0]} castShadow>
         <boxGeometry args={[2.2, 1.7, 7.2]} />
         <meshStandardMaterial
-          color="#1e3a8a" // Royal APSRTC/TGSRTC Deep Blue
-          metalness={0.8}
-          roughness={0.2}
-          envMapIntensity={1.5}
+          color="#050505" // Carbon Black
+          metalness={0.9}
+          roughness={0.15}
+          envMapIntensity={2.0}
         />
       </mesh>
 
@@ -116,14 +116,20 @@ const BusModel = () => {
         <meshBasicMaterial color="#ef4444" />
       </mesh>
 
-      {/* Route3D Glowing Branding Panel on Side */}
+      {/* Racing Red Glowing Branding Panel on Side */}
       <mesh position={[1.12, 1.8, 1.2]}>
         <boxGeometry args={[0.01, 0.25, 2.2]} />
-        <meshBasicMaterial color="#06b6d4" />
+        <meshBasicMaterial color="#ef4444" />
       </mesh>
       <mesh position={[-1.12, 1.8, 1.2]}>
         <boxGeometry args={[0.01, 0.25, 2.2]} />
-        <meshBasicMaterial color="#06b6d4" />
+        <meshBasicMaterial color="#ef4444" />
+      </mesh>
+
+      {/* Aerodynamic Carbon Wing/Spoiler */}
+      <mesh position={[0, 2.2, -3.4]}>
+        <boxGeometry args={[2.0, 0.05, 0.8]} />
+        <meshStandardMaterial color="#000000" metalness={0.9} roughness={0.1} />
       </mesh>
 
       {/* Wheels */}
@@ -182,7 +188,8 @@ const Highway = () => {
 
   useFrame((state, delta) => {
     if (roadLinesRef.current) {
-      roadLinesRef.current.position.z = (roadLinesRef.current.position.z - delta * 15) % 4;
+      // High-speed racing movement
+      roadLinesRef.current.position.z = (roadLinesRef.current.position.z - delta * 30) % 4;
     }
   });
 
@@ -194,14 +201,14 @@ const Highway = () => {
         <meshStandardMaterial color="#0a0f1d" roughness={0.9} />
       </mesh>
 
-      {/* Cyan Cyber Edge Rails */}
+      {/* Racing Red Edge Rails */}
       <mesh position={[5.5, 0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.15, 80]} />
-        <meshBasicMaterial color="#06b6d4" />
+        <meshBasicMaterial color="#ef4444" />
       </mesh>
       <mesh position={[-5.5, 0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.15, 80]} />
-        <meshBasicMaterial color="#06b6d4" />
+        <meshBasicMaterial color="#ef4444" />
       </mesh>
 
       {/* Moving Center Lane Stripes */}
@@ -235,12 +242,12 @@ export default function BusHeroCanvas() {
           castShadow
           shadow-mapSize={[1024, 1024]}
         />
-        <pointLight position={[-6, 4, 3]} intensity={2} color="#06b6d4" />
-        <pointLight position={[6, 4, -3]} intensity={1.5} color="#3b82f6" />
+        <pointLight position={[-6, 4, 3]} intensity={2.5} color="#ef4444" />
+        <pointLight position={[6, 4, -3]} intensity={2.0} color="#06b6d4" />
 
-        <Stars radius={60} depth={30} count={1200} factor={3} saturation={0} fade speed={1} />
+        <Stars radius={60} depth={30} count={1200} factor={3} saturation={0} fade speed={3} />
 
-        <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.2}>
+        <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.1}>
           <BusModel />
         </Float>
 

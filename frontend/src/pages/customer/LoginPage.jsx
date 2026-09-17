@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 import Logo3D from '../../components/Logo3D';
 
 export default function LoginPage() {
@@ -11,6 +11,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -34,7 +35,6 @@ export default function LoginPage() {
     }
   };
 
- 
 
   return (
     <div style={{ maxWidth: '440px', margin: '60px auto 80px auto', padding: '0 20px' }}>
@@ -45,7 +45,7 @@ export default function LoginPage() {
           </div>
           <h2 style={{ fontSize: '24px', color: '#fff' }}>Welcome Back</h2>
           <p style={{ color: '#94a3b8', fontSize: '13px', marginTop: '4px' }}>
-            Sign in to Route3D AP & Telangana Bus System
+            Sign in to JD Bus Services
           </p>
         </div>
 
@@ -90,15 +90,33 @@ export default function LoginPage() {
             </label>
             <div style={{ position: 'relative' }}>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="glass-input"
-                style={{ paddingLeft: '40px' }}
+                style={{ paddingLeft: '40px', paddingRight: '40px' }}
               />
               <Lock size={16} color="#64748b" style={{ position: 'absolute', left: '14px', top: '14px' }} />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '14px',
+                  top: '14px',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#64748b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
           </div>
 
@@ -112,9 +130,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-       
-
-        
 
         <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: '#94a3b8' }}>
           Don't have an account?{' '}

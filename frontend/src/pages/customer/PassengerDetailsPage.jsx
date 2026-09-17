@@ -210,7 +210,7 @@ export default function PassengerDetailsPage() {
         status: 'CONFIRMED',
         paymentStatus: 'PAID',
         bookingTime: new Date().toISOString(),
-        qrCodeData: `ROUTE3D-TICKET-${bookingRef}`,
+        qrCodeData: `JDBUS-TICKET-${bookingRef}`,
         passengers: passengers.map((p) => ({
           name: p.passengerName,
           passengerName: p.passengerName,

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Calendar, Users, ArrowRightLeft, Sparkles, Shield, Clock, Compass, Navigation, Radio } from 'lucide-react';
 import BusHeroCanvas from '../../components/BusHeroCanvas';
 import { useLanguage } from '../../context/LanguageContext';
+import { QRCodeSVG } from 'qrcode.react';
 
 const TELANGANA_CITIES = [
   'Hyderabad', 'Secunderabad', 'Warangal', 'Karimnagar', 'Nizamabad', 'Khammam', 'Nalgonda', 'Suryapet', 'Mahbubnagar'
@@ -115,12 +116,15 @@ export default function HomePage({ onOpenTracker }) {
                 fontSize: 'clamp(32px, 5.5vw, 64px)',
                 lineHeight: 1.15,
                 marginBottom: '18px',
-                background: 'linear-gradient(135deg, #ffffff 30%, #93c5fd 70%, var(--accent-cyan) 100%)',
+                background: 'linear-gradient(135deg, #ffffff 30%, #ef4444 70%, var(--accent-cyan) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
+                textTransform: 'uppercase',
+                fontStyle: 'italic',
+                letterSpacing: '0.02em'
               }}
             >
-              {t('heroTitle1')} <br />{t('heroTitle2')}
+              WHERE YOU GO <br /> MY BUS WILL FOLLOW YOU
             </h1>
 
             <p
@@ -132,11 +136,27 @@ export default function HomePage({ onOpenTracker }) {
                 lineHeight: 1.6,
               }}
             >
-              {t('heroDescription')}
+              Premium inter-state bus booking with intelligent routes, interactive 3D seats and instant e-tickets.
             </p>
 
-            {/* Quick Live Bus Telemetry Tracker Trigger */}
+            {/* Quick Actions */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '28px' }}>
+              <button
+                type="button"
+                onClick={() => document.getElementById('search-panel')?.scrollIntoView({ behavior: 'smooth' })}
+                className="btn-secondary"
+                style={{
+                  padding: '8px 18px',
+                  fontSize: '13px',
+                  borderRadius: '999px',
+                  border: '1px solid var(--primary-500)',
+                  color: '#ef4444',
+                  background: 'rgba(239, 68, 68, 0.12)',
+                }}
+              >
+                <MapPin size={14} color="var(--primary-500)" />
+                <span>WHERE TO?</span>
+              </button>
               <button
                 type="button"
                 onClick={() => onOpenTracker && onOpenTracker()}
@@ -154,10 +174,21 @@ export default function HomePage({ onOpenTracker }) {
                 <span>{t('trackBus')}</span>
               </button>
             </div>
+
+            {/* Mobile Booking QR Code */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '6px', borderRadius: '8px' }}>
+                <QRCodeSVG value="https://route3d-bus.com/mobile-app" size={60} level="L" />
+              </div>
+              <span style={{ fontSize: '11px', color: '#94a3b8', marginTop: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Scan to book on mobile
+              </span>
+            </div>
           </motion.div>
 
           {/* Floating Glassmorphism Search Panel */}
           <motion.form
+            id="search-panel"
             onSubmit={handleSearch}
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -294,7 +325,7 @@ export default function HomePage({ onOpenTracker }) {
                 </select>
               </div>
 
-              {/* SEARCH BUTTON */}
+                  {/* SEARCH BUTTON */}
               <div>
                 <button
                   type="submit"
@@ -305,7 +336,7 @@ export default function HomePage({ onOpenTracker }) {
                     fontSize: '15px',
                   }}
                 >
-                  {t('findBusesBtn')}
+                  BOOK YOUR BUS
                 </button>
               </div>
             </div>

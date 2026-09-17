@@ -3,6 +3,8 @@ package com.route3d.busmanagement.controller;
 import com.route3d.busmanagement.dto.ApiResponse;
 import com.route3d.busmanagement.dto.AuthResponse;
 import com.route3d.busmanagement.dto.LoginRequest;
+import com.route3d.busmanagement.dto.OtpRequest;
+import com.route3d.busmanagement.dto.OtpVerifyRequest;
 import com.route3d.busmanagement.dto.RegisterRequest;
 import com.route3d.busmanagement.service.AuthService;
 import jakarta.validation.Valid;
@@ -31,5 +33,17 @@ public class AuthController {
     public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request) {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(ApiResponse.success("Login successful!", response));
+    }
+
+    @PostMapping("/request-otp")
+    public ResponseEntity<ApiResponse<String>> requestOtp(@Valid @RequestBody OtpRequest request) {
+        authService.requestOtp(request.getEmail());
+        return ResponseEntity.ok(ApiResponse.success("OTP sent to your email", null));
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<ApiResponse<AuthResponse>> verifyOtp(@Valid @RequestBody OtpVerifyRequest request) {
+        AuthResponse response = authService.verifyOtp(request.getEmail(), request.getOtp());
+        return ResponseEntity.ok(ApiResponse.success("OTP verified successfully!", response));
     }
 }

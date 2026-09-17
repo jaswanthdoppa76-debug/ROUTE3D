@@ -147,7 +147,7 @@ export default function Logo3D({ size = 44, interactive = true }) {
     <div
       onMouseEnter={() => interactive && setIsHovered(true)}
       onMouseLeave={() => interactive && setIsHovered(false)}
-      title="Route3D Live 3D Logo (Hover to spin)"
+      title="JD Bus Services Live 3D Logo (Hover to spin)"
       style={{
         width: `${size}px`,
         height: `${size}px`,

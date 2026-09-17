@@ -71,7 +71,7 @@ export default function Navbar({ onOpenLiveTracker }) {
                   letterSpacing: '-0.02em',
                 }}
               >
-                Route<span style={{ color: 'var(--accent-cyan)' }}>3D</span>
+                JD Bus<span style={{ color: 'var(--accent-cyan)' }}> Services</span>
               </span>
               {isAdminPath ? (
                 <span className="badge badge-tgsrtc" style={{ fontSize: '10px' }}>
@@ -137,25 +137,6 @@ export default function Navbar({ onOpenLiveTracker }) {
                 <Navigation size={14} color="var(--accent-cyan)" />
                 {t('trackBus')}
               </button>
-              <Link
-                to={isAdmin ? '/admin/dashboard' : '/admin/login'}
-                style={{
-                  color: '#fbbf24',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(245, 158, 11, 0.12)',
-                  border: '1px solid rgba(245, 158, 11, 0.3)',
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                }}
-              >
-                <ShieldCheck size={15} />
-                {t('adminPortal')}
-              </Link>
             </>
           ) : (
             <>

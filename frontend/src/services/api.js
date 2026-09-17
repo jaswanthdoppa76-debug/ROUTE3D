@@ -370,35 +370,55 @@ function generateMockSeats(totalSeats = 36) {
 // ==========================================
 
 export const authAPI = {
+  requestOtp: async (email) => {
+    try {
+      return await api.post('/auth/request-otp', { email });
+    } catch (e) {
+      return { data: { success: true, message: 'OTP sent (mock)' } };
+    }
+  },
+  verifyOtp: async (email, otp) => {
+    try {
+      return await api.post('/auth/verify-otp', { email, otp });
+    } catch (e) {
+      if (otp === '123456') {
+        return {
+          data: {
+            success: true,
+            data: {
+              userId: Date.now(),
+              fullName: 'Mock User',
+              email: email,
+              role: 'ROLE_USER',
+              token: 'mock_jwt_otp_' + Date.now(),
+            }
+          }
+        };
+      }
+      throw new Error('Invalid OTP');
+    }
+  },
   login: async (credentials) => {
     try {
       return await api.post('/auth/login', credentials);
     } catch (e) {
+      // Mock fallback for both Admin and User
+      let role = 'ROLE_USER';
+      let name = 'Demo User';
       if (credentials.email?.toLowerCase() === 'jaswanthdoppa76@gmail.com') {
-        return {
-          data: {
-            success: true,
-            message: 'Authorized Admin logged in',
-            data: {
-              userId: 1,
-              fullName: 'Jaswanth Doppa',
-              email: 'jaswanthdoppa76@gmail.com',
-              role: 'ROLE_ADMIN',
-              token: 'mock_jwt_admin_' + Date.now(),
-            },
-          },
-        };
+        role = 'ROLE_ADMIN';
+        name = 'Jaswanth Doppa';
       }
       return {
         data: {
           success: true,
-          message: 'Passenger logged in',
+          message: 'Logged in successfully (Offline Mode)',
           data: {
-            userId: 2,
-            fullName: 'Ravi Kumar Naidu',
-            email: credentials.email || 'passenger@teluguride.com',
-            role: 'ROLE_USER',
-            token: 'mock_jwt_user_' + Date.now(),
+            userId: Date.now(),
+            fullName: name,
+            email: credentials.email,
+            role: role,
+            token: 'mock_jwt_' + Date.now(),
           },
         },
       };
@@ -408,17 +428,17 @@ export const authAPI = {
     try {
       return await api.post('/auth/register', data);
     } catch (e) {
-      const isAdm = data.email?.toLowerCase() === 'jaswanthdoppa76@gmail.com';
+      // Mock fallback for registration
       return {
         data: {
           success: true,
-          message: 'Account created successfully',
+          message: 'Account successfully created (Offline Mode)',
           data: {
             userId: Date.now(),
             fullName: data.fullName,
             email: data.email,
-            role: isAdm ? 'ROLE_ADMIN' : 'ROLE_USER',
-            token: 'mock_jwt_' + Date.now(),
+            role: 'ROLE_USER',
+            token: 'mock_jwt_register_' + Date.now(),
           },
         },
       };
@@ -652,7 +672,7 @@ export const bookingAPI = {
         status: 'CONFIRMED',
         paymentStatus: 'PAID',
         bookingTime: new Date().toISOString(),
-        qrCodeData: `ROUTE3D-TICKET-${bookingRef}`,
+        qrCodeData: `JDBUS-TICKET-${bookingRef}`,
         passengers: paxList,
         boardingPoint: data.boardingPoint || 'MGBS Platform 12 (Direct Corridor)',
         droppingPoint: data.droppingPoint || 'PNBS Terminal Platform 4',
@@ -707,7 +727,7 @@ export const bookingAPI = {
           status: 'CONFIRMED',
           paymentStatus: 'PAID',
           bookingTime: new Date().toISOString(),
-          qrCodeData: 'ROUTE3D-TICKET-RT3D-TG-884920',
+          qrCodeData: 'JDBUS-TICKET-TG-884920',
           passengers: [{ name: 'Ravi Kumar Naidu', passengerName: 'Ravi Kumar Naidu', age: 28, gender: 'MALE', seatNumber: 'B1' }],
           boardingPoint: 'MGBS Platform 12',
           droppingPoint: 'PNBS Terminal',

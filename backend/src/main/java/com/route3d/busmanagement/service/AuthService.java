@@ -20,13 +20,19 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final OtpService otpService;
+    private final EmailService emailService;
 
     public AuthService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       JwtTokenProvider jwtTokenProvider) {
+                       JwtTokenProvider jwtTokenProvider,
+                       OtpService otpService,
+                       EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.otpService = otpService;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -81,5 +87,29 @@ public class AuthService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email.toLowerCase().trim())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+    }
+
+    public void requestOtp(String email) {
+        User user = userRepository.findByEmail(email.toLowerCase().trim())
+                .orElseThrow(() -> new ResourceNotFoundException("Email is not registered. Please create an account."));
+
+        String otp = otpService.generateOtp(user.getEmail());
+        emailService.sendOtpEmail(user.getEmail(), otp);
+    }
+
+    public AuthResponse verifyOtp(String email, String otp) {
+        if (!otpService.verifyOtp(email, otp)) {
+            throw new BadCredentialsException("Invalid or expired OTP");
+        }
+
+        User user = userRepository.findByEmail(email.toLowerCase().trim())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (!"ACTIVE".equalsIgnoreCase(user.getStatus())) {
+            throw new InvalidBookingException("This account is currently deactivated. Please contact support.");
+        }
+
+        String token = jwtTokenProvider.generateToken(user.getEmail(), user.getId(), user.getRole().name(), user.getFullName());
+        return new AuthResponse(token, user.getId(), user.getFullName(), user.getEmail(), user.getRole());
     }
 }

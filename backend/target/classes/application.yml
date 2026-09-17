@@ -26,6 +26,18 @@ spring:
     init:
       mode: always
 
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:dummy@gmail.com}
+    password: ${MAIL_PASSWORD:dummy}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 # JWT & Security Configuration
 app:
   jwt:

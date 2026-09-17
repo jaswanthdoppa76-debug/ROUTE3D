@@ -25,19 +25,37 @@ export const AuthProvider = ({ children }) => {
 
   const AUTHORIZED_ADMIN = 'jaswanthdoppa76@gmail.com';
 
-  const quickAdminLogin = () => {
-    const adminUser = {
-      id: 1,
-      fullName: 'Jaswanth Doppa',
-      email: AUTHORIZED_ADMIN,
-      role: 'ROLE_ADMIN',
-    };
-    const mockToken = 'mock_jwt_token_admin_' + Date.now();
-    setToken(mockToken);
-    setUser(adminUser);
-    localStorage.setItem('route3d_token', mockToken);
-    localStorage.setItem('route3d_user', JSON.stringify(adminUser));
-    return adminUser;
+  const requestOtp = async (email) => {
+    const cleanEmail = email.trim().toLowerCase();
+    try {
+      const res = await authAPI.requestOtp(cleanEmail);
+      return res.data;
+    } catch (apiErr) {
+      throw new Error(apiErr.response?.data?.message || apiErr.message || 'Failed to request OTP');
+    }
+  };
+
+  const verifyOtp = async (email, otp) => {
+    const cleanEmail = email.trim().toLowerCase();
+    try {
+      const res = await authAPI.verifyOtp(cleanEmail, otp);
+      if (res.data.success) {
+        const data = res.data.data;
+        const userInfo = {
+          id: data.userId,
+          fullName: data.fullName,
+          email: cleanEmail,
+          role: data.role,
+        };
+        setToken(data.token);
+        setUser(userInfo);
+        localStorage.setItem('route3d_token', data.token);
+        localStorage.setItem('route3d_user', JSON.stringify(userInfo));
+        return userInfo;
+      }
+    } catch (apiErr) {
+      throw new Error(apiErr.response?.data?.message || apiErr.message || 'OTP verification failed');
+    }
   };
 
   const login = async (email, password) => {
@@ -46,38 +64,19 @@ export const AuthProvider = ({ children }) => {
       const res = await authAPI.login({ email: cleanEmail, password });
       if (res.data.success) {
         const data = res.data.data;
-        const isTargetAdmin = cleanEmail === AUTHORIZED_ADMIN || cleanEmail.includes('admin') || data.role === 'ROLE_ADMIN';
         const userInfo = {
-          id: data.userId || (isTargetAdmin ? 1 : 2),
-          fullName: isTargetAdmin ? (cleanEmail === AUTHORIZED_ADMIN ? 'Jaswanth Doppa' : 'RTC Administrator') : data.fullName,
+          id: data.userId,
+          fullName: data.fullName,
           email: cleanEmail,
-          role: isTargetAdmin ? 'ROLE_ADMIN' : 'ROLE_USER',
+          role: data.role,
         };
-        const tokenToSave = data.token || ('mock_jwt_' + Date.now());
-        setToken(tokenToSave);
+        setToken(data.token);
         setUser(userInfo);
-        localStorage.setItem('route3d_token', tokenToSave);
+        localStorage.setItem('route3d_token', data.token);
         localStorage.setItem('route3d_user', JSON.stringify(userInfo));
         return userInfo;
       }
     } catch (apiErr) {
-      // Offline fallback for seamless testing
-      if (cleanEmail === AUTHORIZED_ADMIN || cleanEmail.includes('admin')) {
-        return quickAdminLogin();
-      } else if (cleanEmail === 'passenger@teluguride.com' || password.length >= 1) {
-        const passengerUser = {
-          id: 2,
-          fullName: cleanEmail.includes('passenger') ? 'Ravi Kumar Naidu' : cleanEmail.split('@')[0],
-          email: cleanEmail,
-          role: 'ROLE_USER',
-        };
-        const mockToken = 'mock_jwt_token_passenger_' + Date.now();
-        setToken(mockToken);
-        setUser(passengerUser);
-        localStorage.setItem('route3d_token', mockToken);
-        localStorage.setItem('route3d_user', JSON.stringify(passengerUser));
-        return passengerUser;
-      }
       throw new Error(apiErr.response?.data?.message || apiErr.message || 'Login failed');
     }
   };
@@ -88,12 +87,11 @@ export const AuthProvider = ({ children }) => {
       const res = await authAPI.register({ fullName, email: cleanEmail, password, phone });
       if (res.data.success) {
         const data = res.data.data;
-        const isTargetAdmin = cleanEmail === AUTHORIZED_ADMIN || cleanEmail.includes('admin');
         const userInfo = {
           id: data.userId,
           fullName: data.fullName,
           email: cleanEmail,
-          role: isTargetAdmin ? 'ROLE_ADMIN' : 'ROLE_USER',
+          role: data.role,
         };
         setToken(data.token);
         setUser(userInfo);
@@ -102,20 +100,7 @@ export const AuthProvider = ({ children }) => {
         return userInfo;
       }
     } catch (apiErr) {
-      // Offline fallback
-      const isTargetAdmin = cleanEmail === AUTHORIZED_ADMIN || cleanEmail.includes('admin');
-      const newUser = {
-        id: Date.now(),
-        fullName: fullName || 'New Traveler',
-        email: cleanEmail,
-        role: isTargetAdmin ? 'ROLE_ADMIN' : 'ROLE_USER',
-      };
-      const mockToken = 'mock_jwt_token_' + Date.now();
-      setToken(mockToken);
-      setUser(newUser);
-      localStorage.setItem('route3d_token', mockToken);
-      localStorage.setItem('route3d_user', JSON.stringify(newUser));
-      return newUser;
+      throw new Error(apiErr.response?.data?.message || apiErr.message || 'Registration failed');
     }
   };
 
@@ -136,7 +121,8 @@ export const AuthProvider = ({ children }) => {
         token,
         loading,
         login,
-        quickAdminLogin,
+        requestOtp,
+        verifyOtp,
         register,
         logout,
         isAdmin,

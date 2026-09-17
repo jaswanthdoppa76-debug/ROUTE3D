@@ -62,6 +62,7 @@ export default function SeatSelectionPage({ onOpenTracker }) {
         rows.forEach((r, rIdx) => {
           [1, 2, 3, 4].forEach((c) => {
             count++;
+            
             fallbackSeats.push({
               seatId: count,
               seatNumber: `${r}${c}`,
@@ -174,7 +175,7 @@ export default function SeatSelectionPage({ onOpenTracker }) {
               {schedule.busNumber}
             </span>
           </div>
-          <h2 style={{ fontSize: '22px', color: '#ffffff' }}>{schedule.busName}</h2>
+          <h2 className="pushpa-title" style={{ fontSize: '32px' }}>{schedule.busName}</h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#38bdf8', fontSize: '14px', marginTop: '4px' }}>
             <span>{schedule.sourceCity}</span>
             <ArrowRight size={14} />

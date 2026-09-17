@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const TRANSLATIONS = {
   en: {
     // Navigation & Common
-    appTitle: 'Route3D Mobility',
+    appTitle: 'JD Bus Services',
     appSubtitle: 'AP & TELANGANA MOBILITY',
     searchBuses: 'Search Buses',
     myBookings: 'My Bookings',
@@ -101,9 +101,9 @@ const TRANSLATIONS = {
     statusCancelled: 'CANCELLED',
 
     // AI Chatbot
-    aiTitle: 'Route3D Sarathi AI',
+    aiTitle: 'JD Bus Sarathi AI',
     aiSubtitle: 'AP & Telangana Mobility Assistant',
-    aiWelcome: 'Namaste! I am your Route3D AI Assistant. How can I help your travel across Andhra Pradesh & Telangana today?',
+    aiWelcome: 'Namaste! I am your JD Bus AI Assistant. How can I help your travel across Andhra Pradesh & Telangana today?',
     chipWhereIsMyBus: '📍 Where is my bus?',
     chipHyderabadVijayawada: '🎫 Hyderabad ⇄ Vijayawada',
     chipCancellation: '💸 Cancellation policy',
@@ -114,12 +114,12 @@ const TRANSLATIONS = {
 
     // Footer
     officialContact: 'Official Administrator Contact',
-    rightsReserved: 'Route3D Transportation Platform. Andhra Pradesh & Telangana Inter-State Mobility.',
+    rightsReserved: 'JD Bus Services. Andhra Pradesh & Telangana Inter-State Mobility.',
   },
 
   hi: {
     // Navigation & Common
-    appTitle: 'Route3D मोबिलिटी',
+    appTitle: 'JD Bus Services',
     appSubtitle: 'आंध्र प्रदेश एवं तेलंगाना मोबिलिटी',
     searchBuses: 'बसें खोजें',
     myBookings: 'मेरी बुकिंग्स',
@@ -217,9 +217,9 @@ const TRANSLATIONS = {
     statusCancelled: 'रद्द किया गया',
 
     // AI Chatbot
-    aiTitle: 'Route3D सारथी एआई',
+    aiTitle: 'JD Bus सारथी एआई',
     aiSubtitle: 'आंध्र एवं तेलंगाना यात्रा सहायक',
-    aiWelcome: 'नमस्ते! मैं आपका Route3D एआई सहायक हूँ। आंध्र प्रदेश और तेलंगाना में यात्रा के लिए मैं आपकी क्या सहायता कर सकता हूँ?',
+    aiWelcome: 'नमस्ते! मैं आपका JD Bus एआई सहायक हूँ। आंध्र प्रदेश और तेलंगाना में यात्रा के लिए मैं आपकी क्या सहायता कर सकता हूँ?',
     chipWhereIsMyBus: '📍 मेरी बस कहाँ है?',
     chipHyderabadVijayawada: '🎫 हैदराबाद ⇄ विजयवाड़ा',
     chipCancellation: '💸 कैंसलेशन नियम',
@@ -230,12 +230,12 @@ const TRANSLATIONS = {
 
     // Footer
     officialContact: 'आधिकारिक व्यवस्थापक संपर्क',
-    rightsReserved: 'Route3D ट्रांसपोर्टेशन प्लेटफॉर्म। आंध्र प्रदेश एवं तेलंगाना अंतर-राज्यीय मोबिलिटी।',
+    rightsReserved: 'JD Bus Services। आंध्र प्रदेश एवं तेलंगाना अंतर-राज्यीय मोबिलिटी।',
   },
 
   te: {
     // Navigation & Common
-    appTitle: 'Route3D మొబిలిటీ',
+    appTitle: 'JD Bus Services',
     appSubtitle: 'ఏపీ & తెలంగాణ మొబిలిటీ',
     searchBuses: 'బస్సులను వెతకండి',
     myBookings: 'నా బుకింగ్స్',
@@ -333,9 +333,9 @@ const TRANSLATIONS = {
     statusCancelled: 'రద్దు చేయబడింది',
 
     // AI Chatbot
-    aiTitle: 'Route3D సారథి AI',
+    aiTitle: 'JD Bus సారథి AI',
     aiSubtitle: 'ఏపీ & తెలంగాణ ప్రయాణ సహాయకుడు',
-    aiWelcome: 'నమస్కారం! నేను మీ Route3D AI అసిస్టెంట్ సారథిని. ఆంధ్రప్రదేశ్ మరియు తెలంగాణ ప్రయాణంలో మీకు ఏ విధంగా సహాయపడగలను?',
+    aiWelcome: 'నమస్కారం! నేను మీ JD Bus AI అసిస్టెంట్ సారథిని. ఆంధ్రప్రదేశ్ మరియు తెలంగాణ ప్రయాణంలో మీకు ఏ విధంగా సహాయపడగలను?',
     chipWhereIsMyBus: '📍 నా బస్సు ఎక్కడ ఉంది?',
     chipHyderabadVijayawada: '🎫 హైదరాబాద్ ⇄ విజయవాడ బస్సులు',
     chipCancellation: '💸 క్యాన్సిలేషన్ నియమాలు',
@@ -346,7 +346,7 @@ const TRANSLATIONS = {
 
     // Footer
     officialContact: 'అధికారిక అడ్మినిస్ట్రేటర్ సంప్రదింపు',
-    rightsReserved: 'Route3D ట్రాన్స్‌పోర్టేషన్ ప్లాట్‌ఫారమ్. ఆంధ్రప్రదేశ్ & తెలంగాణ అంతర్రాష్ట్ర మొబిలిటీ.',
+    rightsReserved: 'JD Bus Services. ఆంధ్రప్రదేశ్ & తెలంగాణ అంతర్రాష్ట్ర మొబిలిటీ.',
   }
 };
 
